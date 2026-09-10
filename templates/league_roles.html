@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="mb-4">查詢聯盟職務家長</h2>
+
+<div class="alert alert-info">
+    選擇年份與聯盟職務後，可查看該年度負責該職務的人員。
+</div>
+
+<form class="row g-3 mb-4 card p-4 shadow-sm">
+    <div class="col-md-5">
+        <label for="year" class="form-label fw-bold">年份 (Year)</label>
+        <select name="year" id="year" class="form-select" required>
+            <option value="">請選擇年份</option>
+            {% for year in year_options %}
+            <option value="{{ year }}" {% if s_year == year|string %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的年份。</div>
+    </div>
+    
+    <div class="col-md-5">
+        <label for="out_role" class="form-label fw-bold">聯盟職務 (Out Role)</label>
+        <select name="out_role" id="out_role" class="form-select" required>
+            <option value="">請選擇聯盟職務</option>
+            {% for role in role_options %}
+            <option value="{{ role }}" {% if s_role == role %}selected{% endif %}>
+                {{ role }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的聯盟職務。</div>
+    </div>
+    
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">查詢</button>
+    </div>
+</form>
+
+<hr>
+
+{% if parents %}
+    <div class="card border-success">
+        <div class="card-header bg-success text-white fw-bold">
+            查詢結果：{{ s_year }} 年 - {{ s_role }}
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for name in parents %}
+                <li class="list-group-item fs-5">{{ name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% elif error %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <div>{{ error }}</div>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢球隊賽程</h2>
+
+<div class="alert alert-info">
+    選擇年份、賽季與球隊後，可查看該隊在該賽季的賽程。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label fw-bold">年份</label>
+        <select name="year" class="form-select" required>
+            <option value="">請選擇年份</option>
+            {% for year in year_options %}
+            <option value="{{ year }}" {% if s_year == year|string %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的年份。</div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label fw-bold">賽季</label>
+        <select name="season" class="form-select" required>
+            <option value="">請選擇賽季</option>
+            {% for season in season_options %}
+            <option value="{{ season }}" {% if s_season == season %}selected{% endif %}>
+                {{ season }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的賽季。</div>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label fw-bold">球隊</label>
+        <select name="team_id" class="form-select" required>
+            <option value="">請選擇球隊</option>
+            {% for team in team_options %}
+            <option value="{{ team.team_id }}" {% if s_id == team.team_id %}selected{% endif %}>
+                {{ team.display_label }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">部分球隊可能收錄於資料庫中，但目前沒有賽程資料。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+{% if games %}
+    <h3>比賽列表 ({{ s_id }})</h3>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for game in games %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex justify-content-between">
+                    <span>{{ game.date }}</span>
+                    <span class="badge bg-warning text-dark">{{ game.serNo }}</span>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-2">
+                        <span class="badge rounded-pill bg-success">📍 {{ game.place }}</span>
+                    </div>
+                    
+                    <h5 class="card-title my-3">
+                        {{ game.home_team }} <span class="small text-muted">(主)</span>
+                        <span class="mx-2">vs</span> 
+                        {{ game.guest_team }} <span class="small text-muted">(客)</span>
+                    </h5>
+                    
+                    <p class="card-text text-muted">
+                        🕒 {{ game.from[:5] }} ~ {{ game.to[:5] }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% elif error %}
+    <div class="alert alert-warning">{{ error }}</div>
+{% endif %}
+{% endblock %}

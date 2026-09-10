@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢比賽資訊</h2>
+
+<div class="alert alert-info">
+    選擇年份、賽季與場序後，可查看單場比賽的日期、地點、主客隊與時間。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label fw-bold">年份</label>
+        <select name="year" class="form-select" required>
+            <option value="">請選擇年份</option>
+            {% for year in year_options %}
+            <option value="{{ year }}" {% if s_year == year|string %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的年份。</div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label fw-bold">賽季</label>
+        <select name="season" class="form-select" required>
+            <option value="">請選擇賽季</option>
+            {% for season in season_options %}
+            <option value="{{ season }}" {% if s_season == season %}selected{% endif %}>
+                {{ season }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的賽季。</div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label fw-bold">場序</label>
+        <select name="serNo" class="form-select" required>
+            <option value="">請選擇場序</option>
+            {% for serNo in serno_options %}
+            <option value="{{ serNo }}" {% if s_serNo == serNo %}selected{% endif %}>
+                {{ serNo }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">場序需搭配正確的年份與賽季才會有結果。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+{% if info %}
+<div class="card text-center shadow-sm">
+    <div class="card-header bg-dark text-white fs-5">
+        📅 比賽日期：{{ info.date }}
+    </div>
+    
+    <div class="card-body">
+        
+        <div class="mb-3">
+            <span class="badge rounded-pill bg-success fs-6 px-3 py-2">
+                📍 地點：{{ info.place }}
+            </span>
+        </div>
+
+        <h2 class="card-title text-primary fw-bold mb-4">
+            {{ info.home_team }} <span class="fs-6 text-muted">(主隊)</span>
+            <span class="text-dark fs-5 mx-3">vs</span> 
+            {{ info.guest_team }} <span class="fs-6 text-muted">(客隊)</span>
+        </h2>
+        
+        <hr class="w-50 mx-auto">
+        
+        <p class="card-text fs-4">
+            🕒 
+            <span class="fw-bold">{{ info.from[:5] }}</span> 
+            ~ 
+            <span class="fw-bold">{{ info.to[:5] }}</span>
+        </p>
+    </div>
+</div>
+{% elif error %}
+    <div class="alert alert-warning">{{ error }}</div>
+{% endif %}
+{% endblock %}

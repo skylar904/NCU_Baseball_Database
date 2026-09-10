@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢球員經歷</h2>
+
+<div class="alert alert-info">
+    選擇球員後，可查看該球員歷年所屬球隊；也可以指定年份縮小範圍。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-5">
+        <label class="form-label fw-bold">球員</label>
+        <select name="name" class="form-select" required>
+            <option value="">請選擇球員</option>
+            {% for player_name in player_options %}
+            <option value="{{ player_name }}" {% if search_name == player_name %}selected{% endif %}>
+                {{ player_name }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">球員清單來自資料庫中有球隊紀錄的球員。</div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label fw-bold">年份</label>
+        <select name="year" class="form-select">
+            <option value="">全部年份</option>
+            {% for year in year_options %}
+            <option value="{{ year }}" {% if search_year == year|string %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">不指定年份時會列出所有經歷。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+{% if history %}
+    <div class="card">
+        <div class="card-header bg-info text-dark">
+            {{ search_name }} 的球隊經歷
+        </div>
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>年份</th>
+                    <th>球隊名稱</th>
+                    <th>球隊 ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in history %}
+                <tr>
+                    <td>{{ rec.year }}</td>
+                    <td class="fw-bold">{{ rec.team_name }}</td>
+                    <td><code>{{ rec.team_id }}</code></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% elif error %}
+    <div class="alert alert-warning">{{ error }}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢球隊教練</h2>
+<div class="alert alert-info">
+    選擇球隊後，可查看該隊的教練團資料。查詢職務包含：
+    <strong>隊教練、打擊教練、助理教練</strong>。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-6">
+        <label class="form-label fw-bold">球隊</label>
+        <select name="team_id" class="form-select" required>
+            <option value="">請選擇球隊</option>
+            {% for team in team_options %}
+            <option value="{{ team.team_id }}" {% if search_id == team.team_id %}selected{% endif %}>
+                {{ team.display_label }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">部分球隊可能收錄於資料庫中，但目前沒有教練資料。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+<hr>
+
+{% if result %}
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            球隊名稱：{{ result.team_name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">教練名單</h5>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>教練姓名 (parent_name)</th>
+                        <th>職務 (in_role)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coach in result.coaches %}
+                    <tr>
+                        <td>{{ coach.name }}</td>
+                        <td>{{ coach.role }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center">此球隊沒有上述職務的教練資料</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% elif error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+{% endblock %}

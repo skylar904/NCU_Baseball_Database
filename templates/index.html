@@ -1,0 +1,204 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1587280501635-68a6e82cd5ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 80px 20px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .feature-card {
+        transition: transform 0.3s;
+        cursor: pointer;
+        height: 100%;
+        border-width: 2px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 7px 18px rgba(0,0,0,0.13);
+    }
+    .icon-box {
+        align-items: center;
+        border: 3px solid;
+        border-radius: 50%;
+        display: inline-flex;
+        font-size: 2rem;
+        height: 56px;
+        justify-content: center;
+        margin-bottom: 14px;
+        line-height: 1;
+        width: 56px;
+    }
+    .card-title {
+        font-weight: bold;
+    }
+    .feature-card .btn {
+        border-width: 2px;
+        font-weight: 600;
+    }
+    .feature-blue {
+        border-color: #0d47a1;
+    }
+    .feature-blue .icon-box {
+        background-color: #dbeafe;
+        border-color: #1565c0;
+    }
+    .feature-blue .btn {
+        border-color: #0d47a1;
+        color: #0d47a1;
+    }
+    .feature-blue .btn:hover {
+        background-color: #0d47a1;
+        color: white;
+    }
+    .feature-green {
+        border-color: #1b5e20;
+    }
+    .feature-green .icon-box {
+        background-color: #dcfce7;
+        border-color: #2e7d32;
+    }
+    .feature-green .btn {
+        border-color: #1b5e20;
+        color: #1b5e20;
+    }
+    .feature-green .btn:hover {
+        background-color: #1b5e20;
+        color: white;
+    }
+    .feature-orange {
+        border-color: #e65100;
+    }
+    .feature-orange .icon-box {
+        background-color: #ffedd5;
+        border-color: #ef6c00;
+    }
+    .feature-orange .btn {
+        border-color: #e65100;
+        color: #e65100;
+    }
+    .feature-orange .btn:hover {
+        background-color: #e65100;
+        color: white;
+    }
+    .feature-red {
+        border-color: #b71c1c;
+    }
+    .feature-red .icon-box {
+        background-color: #fee2e2;
+        border-color: #c62828;
+    }
+    .feature-red .btn {
+        border-color: #b71c1c;
+        color: #b71c1c;
+    }
+    .feature-red .btn:hover {
+        background-color: #b71c1c;
+        color: white;
+    }
+</style>
+
+<div class="hero-section">
+    <h1 class="display-4 fw-bold">⚾ 中大棒球聯盟資料庫</h1>
+    <p class="lead">整合球隊、教練、家長職務與比賽紀錄的查詢系統</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    
+    <div class="col">
+        <div class="card h-100 feature-card feature-blue">
+            <div class="card-body text-center">
+                <div class="icon-box">📣</div>
+                <h5 class="card-title">1. 查教練</h5>
+                <p class="card-text text-muted small">輸入球隊 ID，查詢教練團名單</p>
+                <a href="/coaches" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-blue">
+            <div class="card-body text-center">
+                <div class="icon-box">🗂️</div>
+                <h5 class="card-title">2. 查球隊職務</h5>
+                <p class="card-text text-muted small">輸入球隊 ID，查詢所有家長職務</p>
+                <a href="/team_all_roles" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-green">
+            <div class="card-body text-center">
+                <div class="icon-box">👥</div>
+                <h5 class="card-title">3. 查球員名單</h5>
+                <p class="card-text text-muted small">輸入球隊 ID，查詢該隊球員資料</p>
+                <a href="/team_players" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-green">
+            <div class="card-body text-center">
+                <div class="icon-box">🧢</div>
+                <h5 class="card-title">4. 查球員經歷</h5>
+                <p class="card-text text-muted small">輸入球員姓名，查詢歷年所屬球隊</p>
+                <a href="/player" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-orange">
+            <div class="card-body text-center">
+                <div class="icon-box">🏅</div>
+                <h5 class="card-title">5. 查聯盟職務</h5>
+                <p class="card-text text-muted small">輸入年份與職務，查詢聯盟人員</p>
+                <a href="/league_roles" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-orange">
+            <div class="card-body text-center">
+                <div class="icon-box">📋</div>
+                <h5 class="card-title">6. 查球隊列表</h5>
+                <p class="card-text text-muted small">輸入年份與層級，瀏覽所有球隊</p>
+                <a href="/teams" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-red">
+            <div class="card-body text-center">
+                <div class="icon-box">🗓️</div>
+                <h5 class="card-title">7. 查比賽資訊</h5>
+                <p class="card-text text-muted small">輸入年份、賽季與場序，查詢單場比賽</p>
+                <a href="/game" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card h-100 feature-card feature-red">
+            <div class="card-body text-center">
+                <div class="icon-box">📆</div>
+                <h5 class="card-title">8. 查球隊賽程</h5>
+                <p class="card-text text-muted small">輸入球隊 ID，查詢該隊賽程</p>
+                <a href="/team_games" class="btn w-100 stretched-link">前往查詢</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

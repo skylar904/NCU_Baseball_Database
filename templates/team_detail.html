@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← 返回上一頁</a>
+<h1 class="mb-4 text-primary">{{ team_name }}</h1>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-dark text-white">功能一：教練團</div>
+            <ul class="list-group list-group-flush">
+                {% for coach in coaches %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ coach.name }}
+                    <span class="badge bg-info text-dark">{{ coach.role }}</span>
+                </li>
+                {% else %}
+                <li class="list-group-item">無教練資料</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header bg-success text-white">功能三：球員名單</div>
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>中文名</th>
+                        <th>英文名</th>
+                        <th>年級</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                    <tr>
+                        <td>{{ player.chinese_name }}</td>
+                        <td>{{ player.english_name }}</td>
+                        <td>{{ player.grade }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="3">無球員資料</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

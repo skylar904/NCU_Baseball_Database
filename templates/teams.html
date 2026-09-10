@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢球隊列表</h2>
+
+<div class="alert alert-info">
+    選擇年份後，可瀏覽該年度收錄的球隊；也可以用層級縮小查詢範圍。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label fw-bold">年份</label>
+        <select name="year" class="form-select" required>
+            <option value="">請選擇年份</option>
+            {% for year in year_options %}
+            <option value="{{ year }}" {% if search_year == year|string %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">只列出資料庫中有收錄的年份。</div>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label fw-bold">層級</label>
+        <select name="level" class="form-select">
+            <option value="">全部層級</option>
+            {% for level in level_options %}
+            <option value="{{ level }}" {% if search_level == level %}selected{% endif %}>
+                {{ level }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">不指定層級時會列出該年度所有球隊。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+{% if teams %}
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            搜尋結果 (共 {{ teams|length }} 筆)
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for team in teams %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="fw-bold">{{ team.team_name }}</span>
+                
+                <span class="text-muted">
+                    ID: <code class="text-dark bg-light px-2 py-1 border rounded">{{ team.team_id }}</code>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% elif error %}
+    <div class="alert alert-warning">{{ error }}</div>
+{% endif %}
+{% endblock %}

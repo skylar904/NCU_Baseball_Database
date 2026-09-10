@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>查詢球隊球員名單</h2>
+
+<div class="alert alert-info">
+    選擇球隊後，可查看該隊球員的中文姓名、英文姓名與年級。
+</div>
+
+<form class="row g-3 mb-4">
+    <div class="col-md-6">
+        <label class="form-label fw-bold">球隊</label>
+        <select name="team_id" class="form-select" required>
+            <option value="">請選擇球隊</option>
+            {% for team in team_options %}
+            <option value="{{ team.team_id }}" {% if search_id == team.team_id %}selected{% endif %}>
+                {{ team.display_label }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="form-text">部分球隊可能收錄於資料庫中，但目前沒有球員名單資料。</div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">查詢</button>
+    </div>
+</form>
+
+<hr>
+
+{% if result %}
+    <div class="card border-success">
+        <div class="card-header bg-success text-white">
+            球隊名稱：{{ result.team_name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title mb-3">球員名單</h5>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>中文姓名 (chinese_name)</th>
+                        <th>英文姓名 (english_name)</th>
+                        <th>年級 (grade)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in result.players %}
+                    <tr>
+                        <td>{{ player.chinese_name }}</td>
+                        <td>{{ player.english_name }}</td>
+                        <td>{{ player.grade }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">此球隊目前沒有球員資料</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% elif error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+{% endblock %}

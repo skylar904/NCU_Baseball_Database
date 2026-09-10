@@ -23,6 +23,9 @@
 ├── Relation_Picture/
 │   ├── ER_Diagram.png
 │   └── Relation_Database.png
+├── 架構圖/
+│   ├── System_Architecture.drawio
+│   └── System_Architecture.png
 ├── requirements.txt
 ├── vercel.json
 ├── .gitignore
@@ -31,16 +34,7 @@
 
 ## 系統架構圖
 
-```mermaid
-flowchart TD
-    User[使用者] --> Browser[瀏覽器]
-    Browser --> Flask[Flask Web App<br>main.py]
-    Flask --> Routes[路由與請求處理]
-    Routes --> DBUtil[資料查詢模組<br>db_util.py]
-    DBUtil --> SQLite[(SQLite Database<br>baseball_league.db)]
-    Routes --> Templates[Jinja2 Templates<br>templates/]
-    Templates --> Browser
-```
+![系統架構圖](架構圖/System_Architecture.png)
 
 ### ER Diagram
 
@@ -105,6 +99,7 @@ db_util.py
 baseball_league.db
 templates/
 Relation_Picture/
+架構圖/
 requirements.txt
 vercel.json
 ```

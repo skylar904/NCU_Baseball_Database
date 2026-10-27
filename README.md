@@ -42,7 +42,7 @@
 
 ### Relational Database Schema
 
-![Relational Database Schema](Relation_Picture/Relation_Database.png)
+![Relational Database Schema](Relation_Picture/Relation_Database.jpg)
 
 ## 技術架構
 
